@@ -3,29 +3,62 @@ import { combineReducers } from 'redux'
 import * as ActionTypes from './actions/actionTypes'
 
 
-function fooReducer(state = List(), action) {
+function structureReducer(state = Map(), action) {
   switch (action.type) {
-    case ActionTypes.ADD_FOO:
-      return state.push(action.data);
-    case ActionTypes.SET_STATE:
-      return fromJS(action.state.foo);
+    case ActionTypes.CREATE_TOURNEY:
+      return Map();
+    case ActionTypes.LOAD_TOURNEY:
+      return fromJS(action.data.structure);
   }
   return state;
 }
 
-function barReducer(state = 0, action) {
+function nameReducer(state = "My Tourney", action) {
   switch (action.type) {
-    case ActionTypes.ADD_BAR:
-      return action.data;
-    case ActionTypes.SET_STATE:
-      return action.state.bar;      
+    case ActionTypes.CREATE_TOURNEY:
+      return action.name;
+    case ActionTypes.LOAD_TOURNEY:
+      return action.data.name;
   }
+  return state;
+}
+
+function tablesReducer(state = List(), action) {
+  switch (action.type) {
+    case ActionTypes.CREATE_TOURNEY:
+      return List();
+    case ActionTypes.LOAD_TOURNEY:
+      return fromJS(action.data.tables);      
+  }  
+  return state;
+}
+
+function playersReducer(state = List(), action) {
+  switch (action.type) {
+    case ActionTypes.CREATE_TOURNEY:
+      return List();
+    case ActionTypes.LOAD_TOURNEY:
+      return fromJS(action.data.players);      
+  }  
+  return state;
+}
+
+function timerReducer(state = Map(), action) {
+  switch (action.type) {
+    case ActionTypes.CREATE_TOURNEY:
+      return Map();
+    case ActionTypes.LOAD_TOURNEY:
+      return fromJS(action.data.timer);
+  }  
   return state;
 }
 
 const reducer = combineReducers({
-  foo: fooReducer, 
-  bar: barReducer
+  structure: structureReducer, 
+  name: nameReducer, 
+  tables: tablesReducer, 
+  players: playersReducer, 
+  timer: timerReducer
 })
 
 export default reducer;

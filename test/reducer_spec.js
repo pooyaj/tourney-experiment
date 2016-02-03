@@ -6,57 +6,59 @@ import * as ActionTypes from '../src/actions/actionTypes';
 
 describe('reducer', () => {
 
-  it('handles ADD_FOO', () => {
-    const initialState = {
-      foo: List.of(1, 2), 
-      bar: 2
-    };
-    const action = {
-      type: ActionTypes.ADD_FOO,
-      data: 3
-      }
-    const nextState = reducer(initialState, action);
-    
-    expect(nextState.foo).to.equal(List.of(1,2,3));
-    expect(nextState.bar).to.equal(2);
-  });
-
-
-  it('handles SET_STATE with plain JS payload', () => {
+  it('handles CREATE_TOURNEY', () => {
     const initialState = undefined;
     const action = {
-      type: 'SET_STATE',
-      state: {
-        foo: [1, 2, 3], 
-        bar: 2
-      }
-    };
-    
+      type: ActionTypes.CREATE_TOURNEY,
+      name: "This is the first tourney"
+      };
     const nextState = reducer(initialState, action);
-    expect(nextState.foo).to.equal(List.of(1,2,3));
-    expect(nextState.bar).to.equal(2);    
-
+    
+    expect(nextState.name).to.equal("This is the first tourney");
+    expect(nextState.structure).to.equal(Map());
   });
-/*
-  it('handles set state without initial state', () => {
-    const action = {
-      type: 'SET_STATE',
-      state: {
-        item: {
-          sub_item: [1, 2, 3],
-          another_sub_item: 'some string'
+
+  it('handles LOAD_TOURNEY', () => {
+    const initialState = undefined;
+    const data = {
+        "name" : "Hello World",
+        "players" : [ "Pooya Jaferian", "John Doe" ],
+        "structure" : [ {
+          "ante" : 0,
+          "bb" : 2,
+          "sb" : 1,
+          "time" : 20
+        }, {
+          "ante" : 0,
+          "bb" : 4,
+          "sb" : 2,
+          "time" : 20
+        } ],
+        "tables" : [ [ "Pooya Jaferian", "John Doe" ] ],
+        "timer" : {
+          "start" : "some time"
         }
-      }
+      };
+    const action = {
+      type: ActionTypes.LOAD_TOURNEY,
+      data
     };
-    const nextState = reducer(undefined, action);
-
-    expect(nextState).to.equal(fromJS({
-      item: {
-        sub_item: [1, 2, 3],
-        another_sub_item: 'some string'
-      }
-    }));
-  });
-  */
+    const nextState = reducer(initialState, action);
+    
+    expect(nextState.name).to.equal("Hello World");
+    expect(nextState.structure).to.equal(fromJS([ {
+          "ante" : 0,
+          "bb" : 2,
+          "sb" : 1,
+          "time" : 20
+        }, {
+          "ante" : 0,
+          "bb" : 4,
+          "sb" : 2,
+          "time" : 20
+        }]));
+    expect(nextState.tables).to.equal(fromJS([ [ "Pooya Jaferian", "John Doe" ] ]));  
+    expect(nextState.players).to.equal(fromJS([ "Pooya Jaferian", "John Doe" ]));
+  });  
 
 });
