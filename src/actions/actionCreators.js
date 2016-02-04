@@ -1,4 +1,5 @@
 import * as ActionTypes from './actionTypes'
+import {ref, playersRef} from '../firebaseLayer'
 
 /*
  * action creators
@@ -18,4 +19,10 @@ export function addPlayer(name) {
 
 export function removePlayer(name) {
   return { type: ActionTypes.REMOVE_PLAYER, name };
+}
+
+export function submitPlayer(name) {
+  return function (dispatch) {
+    playersRef.push(name);
+  };
 }

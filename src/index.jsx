@@ -7,10 +7,10 @@ import {createStore, compose, applyMiddleware} from 'redux';
 import reducer from './reducer';
 import {Provider} from 'react-redux';
 import * as AllActions from './actions/actionTypes'
-import {loadTourney} from './actions/actionCreators'
+import {loadTourney, addPlayer} from './actions/actionCreators'
 import DevTools from './components/DevTools';
 import thunkMiddleware from 'redux-thunk';
-import Firebase from 'firebase'
+import {ref, playersRef} from './firebaseLayer'
 
 
 
@@ -22,10 +22,13 @@ const finalCreateStore = compose(
 )(createStore);
 
 const store = finalCreateStore(reducer);
-const ref = new Firebase("https://tourney-manager.firebaseio.com/test");
 
-ref.on("value", function(snapshot) {
+ref.once("value", function(snapshot) {
   store.dispatch(loadTourney(snapshot.val()));
+});
+
+playersRef.on("child_added", function (snapshot, prevChildKey) {
+  store.dispatch(addPlayer(snapshot.val()));
 });
 
 
