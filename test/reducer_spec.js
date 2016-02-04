@@ -59,6 +59,42 @@ describe('reducer', () => {
         }]));
     expect(nextState.tables).to.equal(fromJS([ [ "Pooya Jaferian", "John Doe" ] ]));  
     expect(nextState.players).to.equal(fromJS([ "Pooya Jaferian", "John Doe" ]));
+  });
+
+  it('handles ADD_PLAYER', () => {
+    const initialState = {
+        "name" : "Hello World",
+        "players" : fromJS([ "Pooya Jaferian", "John Doe" ]),
+        "structure" : List(),
+        "tables" : List(),
+        "timer" : Map()
+      };
+    const action = {
+      type: ActionTypes.ADD_PLAYER,
+      name: "James Jack"
+    };
+    const nextState = reducer(initialState, action);
+    
+    expect(nextState.name).to.equal("Hello World");
+    expect(nextState.players).to.equal(fromJS([ "Pooya Jaferian", "John Doe", "James Jack" ]));
   });  
+
+  it('handles REMOVE_PLAYER', () => {
+    const initialState = {
+        "name" : "Hello World",
+        "players" : fromJS([ "Pooya Jaferian", "John Doe", "James Jack" ]),
+        "structure" : List(),
+        "tables" : List(),
+        "timer" : Map()
+      };
+    const action = {
+      type: ActionTypes.REMOVE_PLAYER,
+      name: "John Doe"
+    };
+    const nextState = reducer(initialState, action);
+    
+    expect(nextState.name).to.equal("Hello World");
+    expect(nextState.players).to.equal(fromJS([ "Pooya Jaferian", "James Jack" ]));
+  });    
 
 });

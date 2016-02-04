@@ -38,7 +38,11 @@ function playersReducer(state = List(), action) {
     case ActionTypes.CREATE_TOURNEY:
       return List();
     case ActionTypes.LOAD_TOURNEY:
-      return fromJS(action.data.players);      
+      return fromJS(action.data.players);
+    case ActionTypes.ADD_PLAYER:
+      return state.push(action.name);
+    case ActionTypes.REMOVE_PLAYER:
+      return state.filter(v => v !== action.name);
   }  
   return state;
 }

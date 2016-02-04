@@ -11,3 +11,11 @@ export function createTourney(name) {
 export function loadTourney(data) {
   return { type: ActionTypes.LOAD_TOURNEY, data };
 }
+
+export function addPlayer(name) {
+  return { type: ActionTypes.ADD_PLAYER, name };
+}
+
+export function removePlayer(name) {
+  return { type: ActionTypes.REMOVE_PLAYER, name };
+}
