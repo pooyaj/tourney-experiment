@@ -13,12 +13,12 @@ export function loadTourney(data) {
   return { type: ActionTypes.LOAD_TOURNEY, data };
 }
 
-export function addPlayer(name) {
-  return { type: ActionTypes.ADD_PLAYER, name };
+export function addPlayer(key, name) {
+  return { type: ActionTypes.ADD_PLAYER, key, name };
 }
 
-export function removePlayer(name) {
-  return { type: ActionTypes.REMOVE_PLAYER, name };
+export function removePlayer(key) {
+  return { type: ActionTypes.REMOVE_PLAYER, key };
 }
 
 export function submitPlayer(name) {

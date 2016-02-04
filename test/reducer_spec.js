@@ -22,7 +22,7 @@ describe('reducer', () => {
     const initialState = undefined;
     const data = {
         "name" : "Hello World",
-        "players" : [ "Pooya Jaferian", "John Doe" ],
+        "players" : {'1': "Pooya Jaferian", '2': "John Doe" },
         "structure" : [ {
           "ante" : 0,
           "bb" : 2,
@@ -58,43 +58,44 @@ describe('reducer', () => {
           "time" : 20
         }]));
     expect(nextState.tables).to.equal(fromJS([ [ "Pooya Jaferian", "John Doe" ] ]));  
-    expect(nextState.players).to.equal(fromJS([ "Pooya Jaferian", "John Doe" ]));
+    expect(nextState.players).to.equal(fromJS({'1': "Pooya Jaferian", '2': "John Doe" }));
   });
 
   it('handles ADD_PLAYER', () => {
     const initialState = {
         "name" : "Hello World",
-        "players" : fromJS([ "Pooya Jaferian", "John Doe" ]),
+        "players" : fromJS({'1': "Pooya Jaferian", '2': "John Doe" }),
         "structure" : List(),
         "tables" : List(),
         "timer" : Map()
       };
     const action = {
       type: ActionTypes.ADD_PLAYER,
-      name: "James Jack"
+      name: "James Jack", 
+      key: '3'
     };
     const nextState = reducer(initialState, action);
     
     expect(nextState.name).to.equal("Hello World");
-    expect(nextState.players).to.equal(fromJS([ "Pooya Jaferian", "John Doe", "James Jack" ]));
+    expect(nextState.players).to.equal(fromJS({'1': "Pooya Jaferian", '2': "John Doe", '3': 'James Jack'}));
   });  
 
   it('handles REMOVE_PLAYER', () => {
     const initialState = {
         "name" : "Hello World",
-        "players" : fromJS([ "Pooya Jaferian", "John Doe", "James Jack" ]),
+        "players" : fromJS({'1': "Pooya Jaferian", '2': "John Doe", '3': 'James Jack'}),
         "structure" : List(),
         "tables" : List(),
         "timer" : Map()
       };
     const action = {
       type: ActionTypes.REMOVE_PLAYER,
-      name: "John Doe"
+      key: '2'
     };
     const nextState = reducer(initialState, action);
     
     expect(nextState.name).to.equal("Hello World");
-    expect(nextState.players).to.equal(fromJS([ "Pooya Jaferian", "James Jack" ]));
+    expect(nextState.players).to.equal(fromJS({'1': "Pooya Jaferian", '3': 'James Jack'}));
   });    
 
 });

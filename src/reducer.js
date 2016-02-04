@@ -33,16 +33,16 @@ function tablesReducer(state = List(), action) {
   return state;
 }
 
-function playersReducer(state = List(), action) {
+function playersReducer(state = Map(), action) {
   switch (action.type) {
     case ActionTypes.CREATE_TOURNEY:
-      return List();
+      return Map();
     case ActionTypes.LOAD_TOURNEY:
-      return fromJS(action.data.players);
+      return Map(action.data.players);
     case ActionTypes.ADD_PLAYER:
-      return state.push(action.name);
+      return state.set(action.key, action.name);
     case ActionTypes.REMOVE_PLAYER:
-      return state.filter(v => v !== action.name);
+      return state.delete(action.key);
   }  
   return state;
 }
