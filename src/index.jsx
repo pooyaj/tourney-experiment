@@ -28,7 +28,7 @@ ref.once("value", function(snapshot) {
 });
 
 playersRef.on("child_added", function (snapshot, prevChildKey) {
-  store.dispatch(addPlayer(snapshot.val()));
+  store.dispatch(addPlayer(snapshot.key(), snapshot.val()));
 });
 
 
