@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Router, {Route} from 'react-router';
 import App from './components/App';
-import {MyComponentContainer} from './components/MyComponent';
+import {PlayerCreateContainer} from './components/PlayerCreate';
+import {PlayersListContainer} from './components/PlayersList';
 import {createStore, compose, applyMiddleware} from 'redux';
 import reducer from './reducer';
 import {Provider} from 'react-redux';
@@ -31,10 +32,17 @@ playersRef.on("child_added", function (snapshot, prevChildKey) {
   store.dispatch(addPlayer(snapshot.key(), snapshot.val()));
 });
 
+var allComp = () => {
+  return <div> 
+    <PlayerCreateContainer />
+    <PlayersListContainer />
+  </div>;
+};
+
 
 const routes = <Route component={App}>
-  <Route path="/" component={MyComponentContainer} />
-  <Route path="/anotherRoute" component={MyComponentContainer} />
+  <Route path="/" component={allComp} />
+  <Route path="/anotherRoute" component={allComp} />
 </Route>;
 
 ReactDOM.render(

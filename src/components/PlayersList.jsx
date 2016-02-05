@@ -8,20 +8,19 @@ import React from 'react';
 */
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {connect} from 'react-redux'
-import {submitPlayer} from '../actions/actionCreators'
+import {removePlayer} from '../actions/actionCreators'
 
-const myComponent = React.createClass({
+const playersList = React.createClass({
   mixins: [PureRenderMixin],
   getData: function() {
     return this.props.data || [];
   },
   render: function() {
-    return <div className="myComponent">
-      <input type='text' ref='input'/>
-      <button onClick={(e) => this.props.onSubmit(this.refs.input.value.trim())}>
-        Submit
-       </button>
-    </div>;
+    var data = this.getData();
+    console.log(data);
+    return <ul>      
+      {data.map((item, key)=><li onClick={e=>this.props.onClick(key)}>{item}</li>)}
+    </ul>;
   }
 });
 
@@ -29,15 +28,15 @@ const myComponent = React.createClass({
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch) {
   return {
-    onSubmit: (data) => dispatch(submitPlayer(data))
+    onClick: (key) => dispatch(removePlayer(key))
   }
 }
 
 // Which part of the Redux global state does our component want to receive as props?
 function mapStateToProps(state) {
   return {
-    
+    data: state.players    
   };
 }
 
-export const MyComponentContainer = connect(mapStateToProps, mapDispatchToProps)(myComponent);
+export const PlayersListContainer = connect(mapStateToProps, mapDispatchToProps)(playersList);
