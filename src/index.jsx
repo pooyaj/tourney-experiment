@@ -8,7 +8,7 @@ import {createStore, compose, applyMiddleware} from 'redux';
 import reducer from './reducer';
 import {Provider} from 'react-redux';
 import * as AllActions from './actions/actionTypes'
-import {loadTourney, addPlayer} from './actions/actionCreators'
+import {loadTourney, addPlayer, removePlayer} from './actions/actionCreators'
 import DevTools from './components/DevTools';
 import thunkMiddleware from 'redux-thunk';
 import {ref, playersRef} from './firebaseLayer'
@@ -31,6 +31,12 @@ ref.once("value", function(snapshot) {
 playersRef.on("child_added", function (snapshot, prevChildKey) {
   store.dispatch(addPlayer(snapshot.key(), snapshot.val()));
 });
+
+playersRef.on("child_removed", function (snapshot) {
+  store.dispatch(removePlayer(snapshot.key()));
+});
+
+
 
 var allComp = () => {
   return <div> 

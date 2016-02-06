@@ -8,7 +8,7 @@ import React from 'react';
 */
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {connect} from 'react-redux'
-import {removePlayer} from '../actions/actionCreators'
+import {submitRemovePlayer} from '../actions/actionCreators'
 
 const playersList = React.createClass({
   mixins: [PureRenderMixin],
@@ -28,7 +28,7 @@ const playersList = React.createClass({
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch) {
   return {
-    onClick: (key) => dispatch(removePlayer(key))
+    onClick: (key) => dispatch(submitRemovePlayer(key))
   }
 }
 

@@ -26,3 +26,9 @@ export function submitPlayer(name) {
     playersRef.push(name);
   };
 }
+
+export function submitRemovePlayer(id) {
+  return function (dispatch) {
+    playersRef.child(id).remove();
+  };
+}
