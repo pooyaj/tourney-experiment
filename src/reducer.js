@@ -8,7 +8,7 @@ function structureReducer(state = Map(), action) {
     case ActionTypes.CREATE_TOURNEY:
       return Map();
     case ActionTypes.LOAD_TOURNEY:
-      return fromJS(action.data.structure);
+      return fromJS(action.data.structure) || state;
   }
   return state;
 }
@@ -18,7 +18,7 @@ function nameReducer(state = "My Tourney", action) {
     case ActionTypes.CREATE_TOURNEY:
       return action.name;
     case ActionTypes.LOAD_TOURNEY:
-      return action.data.name;
+      return action.data.name || state;
   }
   return state;
 }
@@ -28,7 +28,7 @@ function tablesReducer(state = List(), action) {
     case ActionTypes.CREATE_TOURNEY:
       return List();
     case ActionTypes.LOAD_TOURNEY:
-      return fromJS(action.data.tables);      
+      return fromJS(action.data.tables) || state;      
   }  
   return state;
 }
@@ -38,7 +38,7 @@ function playersReducer(state = Map(), action) {
     case ActionTypes.CREATE_TOURNEY:
       return Map();
     case ActionTypes.LOAD_TOURNEY:
-      return Map(action.data.players);
+      return Map(action.data.players) || state;
     case ActionTypes.ADD_PLAYER:
       return state.set(action.key, action.name);
     case ActionTypes.REMOVE_PLAYER:
@@ -52,7 +52,7 @@ function timerReducer(state = Map(), action) {
     case ActionTypes.CREATE_TOURNEY:
       return Map();
     case ActionTypes.LOAD_TOURNEY:
-      return fromJS(action.data.timer);
+      return fromJS(action.data.timer) || state;
   }  
   return state;
 }

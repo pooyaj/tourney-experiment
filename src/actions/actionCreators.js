@@ -21,6 +21,12 @@ export function submitCreateTourney(name) {
   }
 }
 
+export function submitLoadTourney(id) {
+  return function(dispatch, getState) {
+    rootRef.child(id).once("value", snapshot => dispatch(loadTourney(snapshot.val())));
+  }
+}
+
 export function loadTourney(data) {
   return { type: ActionTypes.LOAD_TOURNEY, data };
 }
