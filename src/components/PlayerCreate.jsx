@@ -8,7 +8,7 @@ import React from 'react';
 */
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {connect} from 'react-redux'
-import {submitPlayer} from '../actions/actionCreators'
+import {submitPlayer, submitCreateTourney} from '../actions/actionCreators'
 
 const playerCreate = React.createClass({
   mixins: [PureRenderMixin],
@@ -21,6 +21,9 @@ const playerCreate = React.createClass({
       <button onClick={(e) => this.props.onSubmit(this.refs.input.value.trim())}>
         Submit
        </button>
+      <button onClick={(e) => this.props.onCreateTourney(this.refs.input.value.trim())}>
+          Create Tourney
+       </button>       
     </div>;
   }
 });
@@ -29,7 +32,8 @@ const playerCreate = React.createClass({
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch) {
   return {
-    onSubmit: (data) => dispatch(submitPlayer(data))
+    onSubmit: (data) => dispatch(submitPlayer(data)), 
+    onCreateTourney: (data) => dispatch(submitCreateTourney(data))
   }
 }
 

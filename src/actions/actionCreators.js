@@ -1,5 +1,5 @@
 import * as ActionTypes from './actionTypes'
-import {ref, playersRef} from '../firebaseLayer'
+import {rootRef, ref, playersRef} from '../firebaseLayer'
 
 /*
  * action creators
@@ -7,6 +7,18 @@ import {ref, playersRef} from '../firebaseLayer'
 
 export function createTourney(name) {
   return { type: ActionTypes.CREATE_TOURNEY, name };
+}
+
+export function submitCreateTourney(name) {
+  return function(dispatch, getState) {
+    dispatch(createTourney(name));
+    const currentState = getState();
+    let jsState = {};
+    Object.keys(currentState).forEach(function (key) {
+      jsState[key] = typeof currentState[key] === 'object' ? currentState[key].toJS() : currentState[key];
+    });
+    const newTourneyRef = rootRef.push(jsState);    
+  }
 }
 
 export function loadTourney(data) {
