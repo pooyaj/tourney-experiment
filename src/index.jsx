@@ -8,10 +8,10 @@ import {createStore, compose, applyMiddleware} from 'redux';
 import reducer from './reducer';
 import {Provider} from 'react-redux';
 import * as AllActions from './actions/actionTypes'
-import {loadTourney, addPlayer, removePlayer} from './actions/actionCreators'
+import {loadTourney, addPlayer, removePlayer, submitLoadTourney} from './actions/actionCreators'
 import DevTools from './components/DevTools';
 import thunkMiddleware from 'redux-thunk';
-import {ref, playersRef} from './firebaseLayer'
+import {updateTourneyRef, setStore} from './firebaseLayer'
 
 
 
@@ -24,19 +24,9 @@ const finalCreateStore = compose(
 
 const store = finalCreateStore(reducer);
 
-ref.once("value", function(snapshot) {
-  store.dispatch(loadTourney(snapshot.val()));
-});
-
-playersRef.on("child_added", function (snapshot, prevChildKey) {
-  store.dispatch(addPlayer(snapshot.key(), snapshot.val()));
-});
-
-playersRef.on("child_removed", function (snapshot) {
-  store.dispatch(removePlayer(snapshot.key()));
-});
-
-
+setStore(store);
+store.subscribe(updateTourneyRef);
+store.dispatch(submitLoadTourney("test"));
 
 var allComp = () => {
   return <div> 

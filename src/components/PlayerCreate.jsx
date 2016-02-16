@@ -25,7 +25,7 @@ const playerCreate = React.createClass({
           Create Tourney
       </button>       
       <button onClick={(e) => this.props.onLoadTourney(this.refs.input.value.trim())}>
-          Create Tourney
+          Load Tourney
       </button>              
     </div>;
   }

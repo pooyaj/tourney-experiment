@@ -57,12 +57,23 @@ function timerReducer(state = Map(), action) {
   return state;
 }
 
+function idReducer(state = "", action) {
+  switch (action.type) {
+    case ActionTypes.CREATE_TOURNEY:
+      return "";
+    case ActionTypes.LOAD_TOURNEY:
+      return action.id;     
+  }  
+  return state;
+}
+
 const reducer = combineReducers({
   structure: structureReducer, 
   name: nameReducer, 
   tables: tablesReducer, 
   players: playersReducer, 
-  timer: timerReducer
+  timer: timerReducer, 
+  id: idReducer
 })
 
 export default reducer;
