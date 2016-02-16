@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Router, {Route} from 'react-router';
+import {Router, Route, hashHistory} from 'react-router';
 import App from './components/App';
 import {PlayerCreateContainer} from './components/PlayerCreate';
 import {PlayersListContainer} from './components/PlayersList';
@@ -46,15 +46,16 @@ var allComp = () => {
 };
 
 
-const routes = <Route component={App}>
-  <Route path="/" component={allComp} />
-  <Route path="/anotherRoute" component={allComp} />
-</Route>;
+const routes = 
+  <Route component={App}>
+    <Route path="/" component={allComp} />
+    <Route path="/anotherRoute" component={allComp} />
+  </Route>;
 
 ReactDOM.render(
   <Provider store={store}>
       <div>
-      <Router>{routes}</Router>
+      <Router hashHistory={hashHistory}>{routes}</Router>
       <DevTools />
     </div>
   </Provider>,
