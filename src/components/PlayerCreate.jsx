@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
 /*
   one note here, this only works with createClass style, but if using 
   es6 class, can use shouldComponentUpdate. Can use this for more info too: 
@@ -18,15 +19,15 @@ const playerCreate = React.createClass({
   render: function() {
     return <div className="myComponent">
       <input type='text' ref='input'/>
-      <button onClick={(e) => this.props.onSubmit(this.refs.input.value.trim())}>
+      <Button onClick={(e) => this.props.onSubmit(this.refs.input.value.trim())}>
         Submit
-      </button>
-      <button onClick={(e) => this.props.onCreateTourney(this.refs.input.value.trim())}>
+      </Button>
+      <Button onClick={(e) => this.props.onCreateTourney(this.refs.input.value.trim())}>
           Create Tourney
-      </button>       
-      <button onClick={(e) => this.props.onLoadTourney(this.refs.input.value.trim())}>
+      </Button>       
+      <Button onClick={(e) => this.props.onLoadTourney(this.refs.input.value.trim())}>
           Load Tourney
-      </button>              
+      </Button>              
     </div>;
   }
 });
