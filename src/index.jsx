@@ -12,7 +12,7 @@ import {loadTourney, addPlayer, removePlayer, submitLoadTourney} from './actions
 import DevTools from './components/DevTools';
 import thunkMiddleware from 'redux-thunk';
 import {updateTourneyRef, setStore} from './firebaseLayer'
-
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
 
 const finalCreateStore = compose(
