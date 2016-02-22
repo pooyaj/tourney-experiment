@@ -1,4 +1,5 @@
 import React from 'react';
+import Player from './Player';
 /*
   one note here, this only works with createClass style, but if using 
   es6 class, can use shouldComponentUpdate. Can use this for more info too: 
@@ -17,12 +18,13 @@ const playersList = React.createClass({
   },
   render: function() {
     var data = this.getData();
-    console.log(data);
-    return <ul>      
-      {data.map((item, key)=><li onClick={e=>this.props.onClick(key)}>{item}</li>)}
-    </ul>;
+    return <div>      
+      {data.map(
+        (item, key) => <Player onRemovePlayer={e=>this.props.onClick(key)} name={item} />)}
+    </div>;
   }
 });
+
 
 
 // Which action creators does it want to receive by props?
