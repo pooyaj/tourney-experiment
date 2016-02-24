@@ -1,12 +1,6 @@
 import React from 'react';
 import Player from './Player';
-/*
-  one note here, this only works with createClass style, but if using 
-  es6 class, can use shouldComponentUpdate. Can use this for more info too: 
-  https://github.com/gaearon/react-pure-render
-  overall, this only needed because we are using immutable, and redux, and we 
-  are sure shallow comparison would be enough to detect state changes. 
-*/
+import {PlayerInputContainer} from './PlayerInput';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {connect} from 'react-redux'
 import {submitRemovePlayer} from '../actions/actionCreators'
@@ -18,9 +12,10 @@ const playersList = React.createClass({
   },
   render: function() {
     var data = this.getData();
-    return <div>      
+    return <div>
+      <PlayerInputContainer />      
       {data.map(
-        (item, key) => <Player onRemovePlayer={e=>this.props.onClick(key)} name={item} />)}
+        (item, key) => <Player onRemovePlayer={e=>this.props.onClick(key)} name={item} key={key}/>)}
     </div>;
   }
 });
