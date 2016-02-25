@@ -52,3 +52,7 @@ export function submitRemovePlayer(id) {
     getPlayersRef().child(id).remove();
   };
 }
+
+export function addStructure(level, info) {
+  return { type: ActionTypes.ADD_STRUCTURE, level, info};   
+}

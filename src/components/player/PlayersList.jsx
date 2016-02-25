@@ -3,7 +3,7 @@ import Player from './Player';
 import {PlayerInputContainer} from './PlayerInput';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {connect} from 'react-redux'
-import {submitRemovePlayer} from '../actions/actionCreators'
+import {submitRemovePlayer} from '../../actions/actionCreators'
 
 const playersList = React.createClass({
   mixins: [PureRenderMixin],

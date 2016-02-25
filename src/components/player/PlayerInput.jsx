@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import {connect} from 'react-redux'
-import {submitPlayer} from '../actions/actionCreators'
+import {submitPlayer} from '../../actions/actionCreators'
 
 const playerInput = React.createClass({
   render: function() {

@@ -1,4 +1,4 @@
-import {Map, List, fromJS} from 'immutable';
+import {OrderedMap, Map, List, fromJS} from 'immutable';
 import { combineReducers } from 'redux'
 import * as ActionTypes from './actions/actionTypes'
 
@@ -9,6 +9,8 @@ function structureReducer(state = Map(), action) {
       return Map();
     case ActionTypes.LOAD_TOURNEY:
       return fromJS(action.data.structure) || state;
+    case ActionTypes.ADD_STRUCTURE:
+      return state.set(action.level, fromJS(action.info));
   }
   return state;
 }
@@ -33,12 +35,12 @@ function tablesReducer(state = List(), action) {
   return state;
 }
 
-function playersReducer(state = Map(), action) {
+function playersReducer(state = OrderedMap(), action) {
   switch (action.type) {
     case ActionTypes.CREATE_TOURNEY:
-      return Map();
+      return OrderedMap();
     case ActionTypes.LOAD_TOURNEY:
-      return Map(action.data.players) || state;
+      return OrderedMap(action.data.players) || state;
     case ActionTypes.ADD_PLAYER:
       return state.set(action.key, action.name);
     case ActionTypes.REMOVE_PLAYER:
@@ -62,7 +64,7 @@ function idReducer(state = "", action) {
     case ActionTypes.CREATE_TOURNEY:
       return "";
     case ActionTypes.LOAD_TOURNEY:
-      return action.id;     
+      return action.id || state;     
   }  
   return state;
 }
