@@ -3,6 +3,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {connect} from 'react-redux'
 import {submitLoadTourney} from '../actions/actionCreators'
 import {PlayersListContainer} from './player/PlayersList';
+import {StructureListContainer} from './structure/StructureList';
 
 
 const tourney = React.createClass({
@@ -15,7 +16,9 @@ const tourney = React.createClass({
   },
   
   render: function() {
-    const view = this.props.tourneyState ? <PlayersListContainer /> : <div>Loading</div> 
+    const view = this.props.tourneyState ? 
+      <div><PlayersListContainer /> <StructureListContainer /></div>
+      : <div>Loading</div>; 
     return <div className="tourneyContainer">
       {this.props.params.tourneyId}      
       <hr />
