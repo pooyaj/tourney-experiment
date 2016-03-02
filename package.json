@@ -38,6 +38,7 @@
     "firebase": "^2.4.0",
     "history": "^1.17.0",
     "immutable": "^3.7.6",
+    "lodash": "^4.6.0",
     "react": "^0.14.6",
     "react-addons-pure-render-mixin": "^0.14.6",
     "react-bootstrap": "^0.28.3",
