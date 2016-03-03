@@ -5,6 +5,8 @@ import {connect} from 'react-redux'
 import {curry} from 'lodash'
 import {submitSetStructure} from '../../actions/actionCreators'
 
+import {RaisedButton} from 'material-ui'
+
 const structureList = React.createClass({
   mixins: [PureRenderMixin],
   getData: function() {
@@ -22,7 +24,7 @@ const structureList = React.createClass({
                                   ante={item.get('ante')}
                                   onFieldUpdate={updater(key)} 
                         />)}
-        <button onClick={() => this.props.submitStructure(this.tempStructure)}> Submit </button>
+        <RaisedButton onClick={() => this.props.submitStructure(this.tempStructure)}> Submit </RaisedButton>
     </div>;
   }, 
   onFieldUpdate: function (index, field, value) 

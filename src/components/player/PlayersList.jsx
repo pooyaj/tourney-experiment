@@ -5,6 +5,15 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {connect} from 'react-redux'
 import {submitRemovePlayer} from '../../actions/actionCreators'
 
+import Table from 'material-ui/lib/table/table';
+import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
+import TableRow from 'material-ui/lib/table/table-row';
+import TableHeader from 'material-ui/lib/table/table-header';
+import TableRowColumn from 'material-ui/lib/table/table-row-column';
+import TableBody from 'material-ui/lib/table/table-body';
+
+
+
 const playersList = React.createClass({
   mixins: [PureRenderMixin],
   getData: function() {
@@ -14,8 +23,18 @@ const playersList = React.createClass({
     var data = this.getData();
     return <div>
       <PlayerInputContainer />      
-      {data.map(
-        (item, key) => <Player onRemovePlayer={e=>this.props.onClick(key)} name={item} key={key}/>)}
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHeaderColumn>Player Name</TableHeaderColumn>
+            <TableHeaderColumn>Remove</TableHeaderColumn>            
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {data.map(
+            (item, key) => <Player onRemovePlayer={e=>this.props.onClick(key)} name={item} key={key}/>)}
+       </TableBody>
+      </Table>
     </div>;
   }
 });

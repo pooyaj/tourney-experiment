@@ -14,6 +14,10 @@ import thunkMiddleware from 'redux-thunk';
 import {updateTourneyRef, setStore} from './firebaseLayer'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
+// for material-ui lib
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+
 
 const finalCreateStore = compose(
   // Middleware you want to use in development:
