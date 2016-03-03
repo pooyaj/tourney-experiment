@@ -3,6 +3,7 @@ import Structure from './Structure';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {connect} from 'react-redux'
 import {curry} from 'lodash'
+import {submitSetStructure} from '../../actions/actionCreators'
 
 const structureList = React.createClass({
   mixins: [PureRenderMixin],
@@ -21,6 +22,7 @@ const structureList = React.createClass({
                                   ante={item.get('ante')}
                                   onFieldUpdate={updater(key)} 
                         />)}
+        <button onClick={() => this.props.submitStructure(this.tempStructure)}> Submit </button>
     </div>;
   }, 
   onFieldUpdate: function (index, field, value) 
@@ -33,7 +35,8 @@ const structureList = React.createClass({
 });
 
 function mapDispatchToProps(dispatch) {
-  return {    
+  return {
+    submitStructure: (val) => dispatch(submitSetStructure(val)) 
   }
 }
 

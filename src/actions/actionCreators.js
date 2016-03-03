@@ -1,5 +1,5 @@
 import * as ActionTypes from './actionTypes'
-import {rootRef, getPlayersRef} from '../firebaseLayer'
+import {rootRef, getPlayersRef, getStructureRef} from '../firebaseLayer'
 
 /*
  * action creators
@@ -55,4 +55,15 @@ export function submitRemovePlayer(id) {
 
 export function addStructure(level, info) {
   return { type: ActionTypes.ADD_STRUCTURE, level, info};   
+}
+
+export function submitSetStructure(structure) {
+  return function (dispatch) {
+    getStructureRef().set(structure.toJS());
+    dispatch(setStructure(structure));
+  };   
+}
+
+export function setStructure(structure) {  
+  return { type: ActionTypes.SET_STRUCTURE, structure};   
 }

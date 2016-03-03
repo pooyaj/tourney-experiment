@@ -11,6 +11,8 @@ function structureReducer(state = Map(), action) {
       return fromJS(action.data.structure) || state;
     case ActionTypes.ADD_STRUCTURE:
       return state.set(action.level, fromJS(action.info));
+    case ActionTypes.SET_STRUCTURE:
+      return action.structure;
   }
   return state;
 }

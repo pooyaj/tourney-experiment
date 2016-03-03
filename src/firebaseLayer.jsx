@@ -5,6 +5,7 @@ import {addPlayer, removePlayer} from './actions/actionCreators'
 let store = undefined;   
 let ref = undefined;
 let playersRef = undefined;
+let structureRef = undefined;
 let currentId = undefined;
 
 
@@ -17,6 +18,10 @@ export function setStore(s) {
 export function getPlayersRef() {
   console.log("getting ref", ref);
   return playersRef;
+};
+
+export function getStructureRef() {
+  return structureRef;
 };
 
 export function updateTourneyRef() {
@@ -36,6 +41,7 @@ export function updateTourneyRef() {
   };
   
   playersRef = ref.child("players");
+  structureRef = ref.child("structure");
   
   playersRef.on("child_added", function (snapshot, prevChildKey) {
     store.dispatch(addPlayer(snapshot.key(), snapshot.val()));
