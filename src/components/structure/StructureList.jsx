@@ -5,17 +5,32 @@ import {connect} from 'react-redux'
 import {curry} from 'lodash'
 import {submitSetStructure} from '../../actions/actionCreators'
 
-import {RaisedButton} from 'material-ui'
+import Card from 'material-ui/lib/card/card';
+import CardHeader from 'material-ui/lib/card/card-header';
+import CardText from 'material-ui/lib/card/card-text';
+import CardActions from 'material-ui/lib/card/card-actions';
+import FlatButton from 'material-ui/lib/flat-button';
+
 
 const structureList = React.createClass({
   mixins: [PureRenderMixin],
   getData: function() {
     return this.props.structure || [];
   },
+  componentWillMount: function () {
+    this.state = {structure: this.getData()};  
+  },
   render: function() {
+    console.log(this.state.structure);
     const structure = this.getData();
-    const updater = curry(this.onFieldUpdate);
-    return <div>            
+    const updater = curry(this._onFieldUpdate);
+     
+    return <div><Card>  
+      <CardHeader
+        title="Tourney Structure"
+        subtitle="Enter tournament time, blind, and ante structure"
+      />
+      <CardText>              
       {structure.map(
         (item, key) => <Structure key={key} 
                                   level={key} 
@@ -24,14 +39,22 @@ const structureList = React.createClass({
                                   ante={item.get('ante')}
                                   onFieldUpdate={updater(key)} 
                         />)}
-        <RaisedButton onClick={() => this.props.submitStructure(this.tempStructure)}> Submit </RaisedButton>
-    </div>;
+      </CardText>
+      <CardActions>
+        <FlatButton label="Add Row" onClick={() => this._addRow()}/>
+        <FlatButton onClick={() => this.props.submitStructure(this.state.structure)} label='Submit' />
+        <FlatButton label="Reset" />
+      </CardActions>             
+    </Card></div>;
   }, 
-  onFieldUpdate: function (index, field, value) 
-  {        
-    this.tempStructure = this.tempStructure 
-      ? this.tempStructure.setIn([index, field], value.target.value) 
-      : this.props.structure;    
+  _addRow: function () {
+    
+  },
+  _onFieldUpdate: function (index, field, value) 
+  {
+    this.setState({
+      structure: this.state.structure.setIn([index, field], value.target.value)
+    });
   }, 
   tempStructure: null
 });
