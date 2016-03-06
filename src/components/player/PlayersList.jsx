@@ -12,7 +12,10 @@ import TableHeader from 'material-ui/lib/table/table-header';
 import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import TableBody from 'material-ui/lib/table/table-body';
 
-
+import Card from 'material-ui/lib/card/card';
+import CardHeader from 'material-ui/lib/card/card-header';
+import CardText from 'material-ui/lib/card/card-text';
+import CardActions from 'material-ui/lib/card/card-actions';
 
 const playersList = React.createClass({
   mixins: [PureRenderMixin],
@@ -21,21 +24,27 @@ const playersList = React.createClass({
   },
   render: function() {
     var data = this.getData();
-    return <div>
-      <PlayerInputContainer />      
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHeaderColumn>Player Name</TableHeaderColumn>
-            <TableHeaderColumn>Remove</TableHeaderColumn>            
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data.map(
-            (item, key) => <Player onRemovePlayer={e=>this.props.onClick(key)} name={item} key={key}/>)}
-       </TableBody>
-      </Table>
-    </div>;
+    return <Card>
+      <CardHeader
+        title="Players"
+        subtitle="Add or remove Players"
+      />
+      <CardText>                  
+        <PlayerInputContainer />      
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderColumn>Player Name</TableHeaderColumn>
+              <TableHeaderColumn>Remove</TableHeaderColumn>            
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {data.map(
+              (item, key) => <Player onRemovePlayer={e=>this.props.onClick(key)} name={item} key={key}/>)}
+        </TableBody>
+        </Table>
+      </CardText>
+    </Card>;
   }
 });
 

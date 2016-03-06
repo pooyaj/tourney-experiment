@@ -17,7 +17,7 @@ const tourney = React.createClass({
   
   render: function() {
     const view = this.props.tourneyState ? 
-      <div><PlayersListContainer /> <StructureListContainer /></div>
+      <div><PlayersListContainer /><br /> <StructureListContainer /></div>
       : <div>Loading</div>; 
     return <div className="tourneyContainer">
       {this.props.params.tourneyId}      
