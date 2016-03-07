@@ -1,6 +1,6 @@
 import Firebase from 'firebase'
-import {addPlayer, removePlayer} from './actions/actionCreators'
-
+import {addPlayer, removePlayer, loginSuccess, logout} from './actions/actionCreators'
+import {CONST} from './constants'
 
 let store = undefined;   
 let ref = undefined;
@@ -11,6 +11,24 @@ let currentId = undefined;
 
 export const rootRef = new Firebase("https://tourney-manager.firebaseio.com");
 
+
+export function listenToAuth() {
+  rootRef.onAuth(function(authData){
+    if (authData){ 
+      console.log("valid auth");
+      store.dispatch(loginSuccess({
+          uid: authData.uid, 
+          provider: authData.provider, 
+          username: authData.facebook.displayName, 
+          authState: CONST.AUTH_VALID
+        }));
+    } else {
+      if (store.getState().auth.authState !== CONST.AUTH_ANONYMOUS){ // log out if not already logged out
+        store.dispatch(logout());
+      }
+    }
+  });  
+}
 
 export function authWithProvider(provider) {
   const p = new Promise(function (resolve, reject) {
@@ -63,6 +81,7 @@ export function updateTourneyRef() {
     store.dispatch(removePlayer(snapshot.key()));
   });    
 };
+
 
 
 

@@ -13,8 +13,10 @@ import * as AllActions from './actions/actionTypes'
 import {loadTourney, addPlayer, removePlayer, submitLoadTourney} from './actions/actionCreators'
 import DevTools from './components/DevTools';
 import thunkMiddleware from 'redux-thunk';
-import {updateTourneyRef, setStore} from './firebaseLayer'
+import {updateTourneyRef, setStore, listenToAuth} from './firebaseLayer'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+
+import {CONST} from './constants'
 
 // for material-ui lib
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -31,8 +33,9 @@ const finalCreateStore = compose(
 const store = finalCreateStore(reducer);
 
 setStore(store);
-store.subscribe(updateTourneyRef);
-store.dispatch(submitLoadTourney("test"));
+listenToAuth();
+//store.subscribe(updateTourneyRef);
+//store.dispatch(submitLoadTourney("test"));
 
 var allComp = () => {
   return <div> 
@@ -40,12 +43,21 @@ var allComp = () => {
   </div>;
 };
 
+function requireAuth(nextState, replace) {
+  const auth = store.getState().auth;
+  if (auth.authState !== CONST.AUTH_VALID) {
+    replace({
+      pathname: '/login',
+      state: { nextPathname: nextState.location.pathname }
+    })
+  }
+}
 
 const routes = 
   <Route component={App}>
     <Route path="/" component={allComp} />
     <Route path="/tourneys" component={allComp} />
-    <Route path="/tourneys/:tourneyId" component={Tourney} />
+    <Route path="/tourneys/:tourneyId" component={Tourney} onEnter={requireAuth}/>
     <Route path="/anotherRoute" component={allComp} />
     <Route path="/login" component={LoginContainer} />
   </Route>;

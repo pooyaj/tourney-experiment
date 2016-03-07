@@ -72,13 +72,8 @@ export function loginUsingFacebook() {
   return function (dispatch) {
     dispatch(loginInProgress())
     authWithProvider('facebook')
-    .then(function (authData) {      
-      dispatch(loginSuccess({
-        uid: authData.uid, 
-        provider: authData.provider, 
-        username: authData.facebook.displayName, 
-        authState: CONST.AUTH_VALID
-      }))  
+    .then(function (authData) {
+      // nothing to do really, firebase will update auth status      
     })
     .catch(function (error) {
       dispatch(loginError, error);
@@ -96,4 +91,8 @@ export function loginSuccess(data) {
 
 export function loginError(error) {
   return {type: ActionTypes.AUTH_ERROR, error};
+}
+
+export function logout() {
+  return {type: ActionTypes.AUTH_LOGOUT};
 }
