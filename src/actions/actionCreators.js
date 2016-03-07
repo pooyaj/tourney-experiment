@@ -1,5 +1,5 @@
 import * as ActionTypes from './actionTypes'
-import {rootRef, getPlayersRef, getStructureRef, authWithProvider} from '../firebaseLayer'
+import {rootRef, getPlayersRef, getStructureRef, authWithProvider, authWithPassword} from '../firebaseLayer'
 import {CONST} from '../constants'
 /*
  * action creators
@@ -68,15 +68,20 @@ export function setStructure(structure) {
 }
 
 
-export function loginUsingFacebook() {  
+export function loginWithProvider(provider, data) {  
   return function (dispatch) {
     dispatch(loginInProgress())
-    authWithProvider('facebook')
-    .then(function (authData) {
-      // nothing to do really, firebase will update auth status      
+    var auth = provider === 'password' 
+      ? authWithPassword(data)
+      : authWithProvider(provider)
+    
+    auth.then(function (authData) {
+      // nothing to do really, firebase will update auth status
+      console.log("nothing");      
     })
     .catch(function (error) {
-      dispatch(loginError, error);
+      console.log("error");
+      dispatch(loginError(error));
     });        
   };   
 }
@@ -90,6 +95,7 @@ export function loginSuccess(data) {
 }
 
 export function loginError(error) {
+  console.log(error);
   return {type: ActionTypes.AUTH_ERROR, error};
 }
 

@@ -4,7 +4,7 @@ import {Router, Route, hashHistory} from 'react-router';
 import App from './components/App';
 import {PlayerCreateContainer} from './components/PlayerCreate';
 import {Tourney} from './components/Tourney';
-import {LoginContainer} from './components/Login';
+import {LoginContainer} from './components/login/Login';
 
 import {createStore, compose, applyMiddleware} from 'redux';
 import reducer from './reducer';
@@ -34,8 +34,6 @@ const store = finalCreateStore(reducer);
 
 setStore(store);
 listenToAuth();
-//store.subscribe(updateTourneyRef);
-//store.dispatch(submitLoadTourney("test"));
 
 var allComp = () => {
   return <div> 
@@ -64,7 +62,7 @@ const routes =
 
 ReactDOM.render(
   <Provider store={store}>
-      <div>
+      <div class="container">
       <Router hashHistory={hashHistory}>{routes}</Router>
       <DevTools />
     </div>

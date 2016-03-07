@@ -1,5 +1,5 @@
 import React from 'react';
-import {authWithFB} from '../firebaseLayer'
+import {authWithFB} from '../../firebaseLayer'
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {connect} from 'react-redux'
 
@@ -8,8 +8,12 @@ import CardHeader from 'material-ui/lib/card/card-header';
 import CardText from 'material-ui/lib/card/card-text';
 import CardActions from 'material-ui/lib/card/card-actions';
 import RaisedButton from 'material-ui/lib/raised-button';
+import Divider from 'material-ui/lib/divider';
+import FontIcon from 'material-ui/lib/font-icon';
 
-import {loginUsingFacebook} from '../actions/actionCreators'
+import {loginWithProvider} from '../../actions/actionCreators'
+
+import LoginForm from './LoginForm'
 
 const login = React.createClass({
   mixins: [PureRenderMixin],
@@ -17,12 +21,16 @@ const login = React.createClass({
     return <Card>
       <CardHeader
         title="Login"
-        subtitle="Login to the system"
+        subtitle="Login to tourney manager"
       />
-      <CardText>                  
-        <RaisedButton onClick={this.props.onLogin}> Login </RaisedButton>
+      <CardText>
+        <LoginForm onLogin={this.props.onLoginUP}/>
+        <br />    
+        <RaisedButton onClick={this.props.onLoginFB}> Facebook </RaisedButton>
+        <br /><br />
+        <RaisedButton onClick={this.props.onLogin}> Twitter </RaisedButton>        
       </CardText>
-    </Card>;
+    </Card>    
   } 
 });
 
@@ -30,7 +38,8 @@ const login = React.createClass({
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch) {
   return {
-    onLogin: () => dispatch(loginUsingFacebook())
+    onLoginFB: () => dispatch(loginWithProvider('facebook')), 
+    onLoginUP: (loginData) => dispatch(loginWithProvider('password', loginData))
   }
 }
 
