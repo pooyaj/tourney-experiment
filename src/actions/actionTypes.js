@@ -17,3 +17,7 @@ export const ADD_STRUCTURE = 'ADD_STRUCTURE';
 export const EDIT_STRUCTURE = 'EDIT_STRUCTURE';
 export const SET_STRUCTURE = 'SET_STRUCTURE';
 
+export const AUTH_IN_PROGRESS = 'AUTH_IN_PROGRESS';
+export const AUTH_LOGIN = 'AUTH_LOGIN';
+export const AUTH_LOGOUT = 'AUTH_LOGOUT';
+export const AUTH_ERROR = 'AUTH_ERROR';

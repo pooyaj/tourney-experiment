@@ -11,12 +11,25 @@ let currentId = undefined;
 
 export const rootRef = new Firebase("https://tourney-manager.firebaseio.com");
 
+
+export function authWithProvider(provider) {
+  const p = new Promise(function (resolve, reject) {
+    rootRef.authWithOAuthPopup(provider, function (error, authData) {
+      if (error) {
+        reject(error);
+      } else {        
+        resolve(authData);
+      }      
+    });  
+  });
+  return p;
+}
+
 export function setStore(s) { 
   store = s;
 };
 
-export function getPlayersRef() {
-  console.log("getting ref", ref);
+export function getPlayersRef() { 
   return playersRef;
 };
 
@@ -31,7 +44,6 @@ export function updateTourneyRef() {
   };
   currentId = store.getState().id;
   
-  console.log("Loading with: ", currentId);
   
   ref = rootRef.child(currentId);
   

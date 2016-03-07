@@ -1,6 +1,6 @@
 import * as ActionTypes from './actionTypes'
-import {rootRef, getPlayersRef, getStructureRef} from '../firebaseLayer'
-
+import {rootRef, getPlayersRef, getStructureRef, authWithProvider} from '../firebaseLayer'
+import {CONST} from '../constants'
 /*
  * action creators
  */
@@ -17,8 +17,7 @@ export function submitCreateTourney(name) {
     Object.keys(currentState).forEach(function (key) {
       jsState[key] = typeof currentState[key] === 'object' ? currentState[key].toJS() : currentState[key];
     });
-    const newTourneyRef = rootRef.push(jsState);
-    console.log(newTourneyRef.key());
+    const newTourneyRef = rootRef.push(jsState);   
     dispatch(submitLoadTourney(newTourneyRef.key()));
   }
 }
@@ -66,4 +65,35 @@ export function submitSetStructure(structure) {
 
 export function setStructure(structure) {  
   return { type: ActionTypes.SET_STRUCTURE, structure};   
+}
+
+
+export function loginUsingFacebook() {  
+  return function (dispatch) {
+    dispatch(loginInProgress())
+    authWithProvider('facebook')
+    .then(function (authData) {      
+      dispatch(loginSuccess({
+        uid: authData.uid, 
+        provider: authData.provider, 
+        username: authData.facebook.displayName, 
+        authState: CONST.AUTH_VALID
+      }))  
+    })
+    .catch(function (error) {
+      dispatch(loginError, error);
+    });        
+  };   
+}
+
+export function loginInProgress() {
+  return {type: ActionTypes.AUTH_IN_PROGRESS};
+}
+
+export function loginSuccess(data) {
+  return {type: ActionTypes.AUTH_LOGIN, data};
+}
+
+export function loginError(error) {
+  return {type: ActionTypes.AUTH_ERROR, error};
 }

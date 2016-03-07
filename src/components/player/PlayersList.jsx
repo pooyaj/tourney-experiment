@@ -32,7 +32,7 @@ const playersList = React.createClass({
       <CardText>                  
         <PlayerInputContainer />      
         <Table>
-          <TableHeader>
+          <TableHeader displaySelectAll={false}>
             <TableRow>
               <TableHeaderColumn>Player Name</TableHeaderColumn>
               <TableHeaderColumn>Remove</TableHeaderColumn>            

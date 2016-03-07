@@ -12,6 +12,14 @@ import CardText from 'material-ui/lib/card/card-text';
 import CardActions from 'material-ui/lib/card/card-actions';
 import FlatButton from 'material-ui/lib/flat-button';
 
+import Table from 'material-ui/lib/table/table';
+import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
+import TableHeader from 'material-ui/lib/table/table-header';
+import TableBody from 'material-ui/lib/table/table-body';
+import TableRow from 'material-ui/lib/table/table-row';
+import TableRowColumn from 'material-ui/lib/table/table-row-column';
+
+
 
 const structureList = React.createClass({
   mixins: [PureRenderMixin],
@@ -25,7 +33,6 @@ const structureList = React.createClass({
     this.setState({structure: nextProps.structure});
   }, 
   render: function() {
-    console.log(this.state.structure);
     const structure = this.state.structure;
     const updater = curry(this._onFieldUpdate);
      
@@ -34,15 +41,29 @@ const structureList = React.createClass({
         title="Tourney Structure"
         subtitle="Enter tournament time, blind, and ante structure"
       />
-      <CardText>              
-      {structure.map(
-        (item, key) => <Structure key={key} 
-                                  level={key} 
-                                  bb={item.get('bb')}
-                                  sb={item.get('sb')}
-                                  ante={item.get('ante')}
-                                  onFieldUpdate={updater(key)} 
-                        />)}
+      <CardText>       
+      <Table>
+        <TableHeader displaySelectAll={false}>
+          <TableRow>
+            <TableHeaderColumn style={{align: 'left'}}>Level</TableHeaderColumn>
+            <TableHeaderColumn>Small Blind</TableHeaderColumn>
+            <TableHeaderColumn>Big Blind</TableHeaderColumn>
+            <TableHeaderColumn>Ante</TableHeaderColumn>
+            <TableHeaderColumn>Time</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody>                
+          {structure.map(
+            (item, key) => <Structure key={key} 
+                                      level={key} 
+                                      bb={item.get('bb')}
+                                      sb={item.get('sb')}
+                                      ante={item.get('ante')}
+                                      time={item.get('time')}
+                                      onFieldUpdate={updater(key)} 
+                            />)}
+        </TableBody>
+      </Table>
       </CardText>
       <CardActions>
         <FlatButton label="Add Row" onClick={() => this._addRow()}/>
@@ -59,7 +80,8 @@ const structureList = React.createClass({
     const nextState = this.state.structure.setIn([lastRowId+1], Map({
       bb: lastRowData.get('bb') * 2, 
       sb: lastRowData.get('sb') * 2 || 0, 
-      ante: lastRowData.get('ante') * 2 || 0
+      ante: lastRowData.get('ante') * 2 || 0, 
+      time: lastRowData.get('time') || 0
     }));
     this.setState({structure: nextState})
   },

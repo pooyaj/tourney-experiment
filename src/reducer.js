@@ -1,6 +1,7 @@
 import {OrderedMap, Map, List, fromJS} from 'immutable';
 import { combineReducers } from 'redux'
 import * as ActionTypes from './actions/actionTypes'
+import {CONST} from './constants'
 
 
 function structureReducer(state = Map(), action) {
@@ -71,13 +72,34 @@ function idReducer(state = "", action) {
   return state;
 }
 
+function authReducer(
+  state = {
+    authState: CONST.AUTH_ANONYMOUS,
+    username: null, 
+    uid: null, 
+    provider: null
+  }, action) {
+  switch (action.type) {
+    case ActionTypes.AUTH_IN_PROGRESS:
+      return Object.assign({}, state, {authState: CONST.AUTH_WAITING});
+    case ActionTypes.AUTH_LOGIN:
+      return action.data;
+    case ActionTypes.AUTH_LOGOUT:
+      return state;
+    case ActionTypes.AUTH_ERROR:
+      return Object.assign({}, state, {authState: CONST.AUTH_ERROR});;      
+  }  
+  return state;
+}
+
 const reducer = combineReducers({
   structure: structureReducer, 
   name: nameReducer, 
   tables: tablesReducer, 
   players: playersReducer, 
   timer: timerReducer, 
-  id: idReducer
+  id: idReducer, 
+  auth: authReducer
 })
 
 export default reducer;

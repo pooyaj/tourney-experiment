@@ -4,6 +4,8 @@ import {Router, Route, hashHistory} from 'react-router';
 import App from './components/App';
 import {PlayerCreateContainer} from './components/PlayerCreate';
 import {Tourney} from './components/Tourney';
+import {LoginContainer} from './components/Login';
+
 import {createStore, compose, applyMiddleware} from 'redux';
 import reducer from './reducer';
 import {Provider} from 'react-redux';
@@ -45,6 +47,7 @@ const routes =
     <Route path="/tourneys" component={allComp} />
     <Route path="/tourneys/:tourneyId" component={Tourney} />
     <Route path="/anotherRoute" component={allComp} />
+    <Route path="/login" component={LoginContainer} />
   </Route>;
 
 ReactDOM.render(
@@ -56,4 +59,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('app')
 );
+
 
