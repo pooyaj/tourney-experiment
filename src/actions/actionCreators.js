@@ -1,5 +1,5 @@
 import * as ActionTypes from './actionTypes'
-import {rootRef, getPlayersRef, getStructureRef, authWithProvider, authWithPassword} from '../firebaseLayer'
+import {rootRef, updateTourneyRef, getPlayersRef, getStructureRef, authWithProvider, authWithPassword} from '../firebaseLayer'
 import {CONST} from '../constants'
 /*
  * action creators
@@ -24,7 +24,10 @@ export function submitCreateTourney(name) {
 
 export function submitLoadTourney(id) {
   return function(dispatch, getState) {
-    rootRef.child(id).once("value", snapshot => dispatch(loadTourney(snapshot.val(), id)));
+    rootRef.child(id).once("value", snapshot => {
+      dispatch(loadTourney(snapshot.val(), id));
+      updateTourneyRef();    
+    });    
   }
 }
 
