@@ -12,7 +12,6 @@ let currentId = undefined;
 
 export const rootRef = new Firebase("https://tourney-manager.firebaseio.com");
 
-
 export function listenToAuth() {
   rootRef.onAuth(function(authData){
     if (authData){ 

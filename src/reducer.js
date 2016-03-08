@@ -2,7 +2,7 @@ import {OrderedMap, Map, List, fromJS} from 'immutable';
 import { combineReducers } from 'redux'
 import * as ActionTypes from './actions/actionTypes'
 import {CONST} from './constants'
-
+import {routerReducer} from 'react-router-redux'
 
 function structureReducer(state = Map(), action) {
   switch (action.type) {
@@ -99,7 +99,8 @@ const reducer = combineReducers({
   players: playersReducer, 
   timer: timerReducer, 
   id: idReducer, 
-  auth: authReducer
+  auth: authReducer, 
+  routing: routerReducer
 })
 
 export default reducer;

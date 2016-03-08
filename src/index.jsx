@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router, Route, hashHistory} from 'react-router';
+import {Router, Route, hashHistory, browserHistory} from 'react-router';
 import App from './components/App';
 import {PlayerCreateContainer} from './components/PlayerCreate';
 import {Tourney} from './components/Tourney';
@@ -17,6 +17,8 @@ import {updateTourneyRef, setStore, listenToAuth} from './firebaseLayer'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
 import {CONST} from './constants'
+import { syncHistoryWithStore } from 'react-router-redux'
+
 
 // for material-ui lib
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -31,6 +33,7 @@ const finalCreateStore = compose(
 )(createStore);
 
 const store = finalCreateStore(reducer);
+const history = syncHistoryWithStore(browserHistory, store)
 
 setStore(store);
 listenToAuth();
@@ -63,7 +66,7 @@ const routes =
 ReactDOM.render(
   <Provider store={store}>
       <div class="container">
-      <Router hashHistory={hashHistory}>{routes}</Router>
+        <Router history={history}>{routes}</Router>
       <DevTools />
     </div>
   </Provider>,
