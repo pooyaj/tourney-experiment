@@ -1,5 +1,5 @@
 import Firebase from 'firebase'
-import {addPlayer, removePlayer, loginSuccess, logout} from './actions/actionCreators'
+import {addPlayer, removePlayer, loginSuccess, logout, toggleTimer, setLastSave, setElapsed} from './actions/actionCreators'
 import {CONST} from './constants'
 import {partial} from 'lodash'
 
@@ -7,6 +7,7 @@ let store = undefined;
 let ref = undefined;
 let playersRef = undefined;
 let structureRef = undefined;
+let timerRef = undefined;
 let currentId = undefined;
 
 
@@ -77,6 +78,11 @@ export function getPlayersRef() {
   return playersRef;
 };
 
+
+export function getTimerRef() { 
+  return timerRef;
+};
+
 export function getStructureRef() {
   return structureRef;
 };
@@ -94,11 +100,25 @@ export function updateTourneyRef() {
   if (playersRef) {
     playersRef.off("child_added");
     playersRef.off("child_removed");
+    timerRef.child('running').off('value');
+    timerRef.child('elapsed').off('value');
+    timerRef.child('lastSave').off('value');
+    
   };
-  
-  playersRef = ref.child("players");
+    
   structureRef = ref.child("structure");
   
+  timerRef = ref.child("timer");  
+  timerRef.child('running').on('value', snap => store.dispatch(toggleTimer(!!snap.val())))
+
+  timerRef = ref.child("timer");  
+  timerRef.child('elapsed').on('value', snap => store.dispatch(setElapsed(snap.val())))
+
+  timerRef = ref.child("timer");  
+  timerRef.child('lastSave').on('value', snap => store.dispatch(setLastSave(snap.val())))
+
+  
+  playersRef = ref.child("players");
   playersRef.on("child_added", function (snapshot, prevChildKey) {
     store.dispatch(addPlayer(snapshot.key(), snapshot.val()));
   });

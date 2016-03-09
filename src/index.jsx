@@ -7,7 +7,7 @@ import {Tourney} from './components/Tourney';
 import {LoginContainer} from './components/login/Login';
 
 import {createStore, compose, applyMiddleware} from 'redux';
-import reducer from './reducer';
+import reducer from './reducers/reducer';
 import {Provider} from 'react-redux';
 import * as AllActions from './actions/actionTypes'
 import {loadTourney, addPlayer, removePlayer, submitLoadTourney} from './actions/actionCreators'

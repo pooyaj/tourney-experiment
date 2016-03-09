@@ -105,3 +105,15 @@ export function loginError(error) {
 export function logout() {
   return {type: ActionTypes.AUTH_LOGOUT};
 }
+
+export function toggleTimer(running) {  
+  return { type: ActionTypes.TOGGLE_TIMER, running};   
+}
+
+export function setElapsed(elapsed) {  
+  return { type: ActionTypes.SET_ELAPSED, elapsed};   
+}
+
+export function setLastSave(lastSaveTime) {  
+  return { type: ActionTypes.SET_LAST_SAVE, lastSaveTime};   
+}
