@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {submitLoadTourney} from '../actions/actionCreators'
 import {PlayersListContainer} from './player/PlayersList';
 import {StructureListContainer} from './structure/StructureList';
-
+import {TimerContainer} from './timer/Timer';
 
 const tourney = React.createClass({
   mixins: [PureRenderMixin],
@@ -17,7 +17,7 @@ const tourney = React.createClass({
   
   render: function() {
     const view = this.props.tourneyState ? 
-      <div><PlayersListContainer /><br /> <StructureListContainer /></div>
+      <div><TimerContainer /> <br /> <PlayersListContainer /><br /> <StructureListContainer /></div>
       : <div>Loading</div>; 
     return <div className="tourneyContainer">
       {this.props.params.tourneyId}      
